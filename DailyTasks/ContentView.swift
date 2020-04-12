@@ -1,21 +1,31 @@
-//
-//  ContentView.swift
-//  DailyTasks
-//
-//  Created by Sourav Datta on 12/04/20.
-//  Copyright © 2020 10Avenue. All rights reserved.
-//
-
 import SwiftUI
+import WebKit
 
 struct ContentView: View {
-    var body: some View {
-        Text("Hello, World!")
-    }
+  var body: some View {
+    WebView().edgesIgnoringSafeArea(.all)
+  }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+struct WebView: UIViewRepresentable {
+  func makeUIView(context: Context) -> WKWebView {
+    let webView = WKWebView()
+    webView.scrollView.isScrollEnabled = true
+    return webView
+  }
+
+  func updateUIView(_ webView: WKWebView, context: Context) {
+    let liveView = "https://sheltered-tundra-09814.herokuapp.com"
+    if let url = URL(string: liveView) {
+       let request = URLRequest(url: url)
+       webView.load(request)
     }
+  }
 }
+
+struct ContentView_Previews : PreviewProvider {
+  static var previews: some View {
+    ContentView()
+  }
+}
+
